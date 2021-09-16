@@ -29,7 +29,6 @@ class Program():
 
         self.log = self.startlog()
         self.log.debug(f"Debugging {PROGRAM}")
-        # print('Hello world')
 
     def startlog(self):
         if self.settings['log'] or 'logfile' in self.settings.keys():
@@ -58,6 +57,7 @@ class Program():
         return logging.getLogger(__name__)
 
     def run(self):
+        
         for f in filter(lambda s: self.settings["all"] or not invisible(s), self.settings["args"]):
             for name in glob(f, recursive=self.settings["recursive"]):
                 self.process_fname(name)
@@ -77,18 +77,13 @@ class Program():
             self.process_file(p)
 
     def process_link(self, p):
-        if not self.settings["follow"]:
-            if self.settings["verbose"]:
-                self.log.info(f"File {str(p)} is a symbolic link.")
-                return
-            else:
-                pass
-        else:
+        if self.settings["follow"]:
             process_file(p)
+        else:
+            self.log.info(f"File {str(p)} is a symbolic link.")
 
     def process_dir(self, p):
-        if self.settings["verbose"]:
-            self.log.info(f"Processing directory {str(p)}")
+        self.log.info(f"Processing directory {str(p)}")
         if self.settings["recursive"]:
             for f in listdir(str(p)):
                 self.process_fname(os.path.join(str(p), f))
