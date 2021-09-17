@@ -1,3 +1,5 @@
+"""Run the program."""
+
 from pprint import pp
 import sys
 

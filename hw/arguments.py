@@ -1,10 +1,9 @@
+""" Define the `Arguments` class. """
+
 from argparse import ArgumentParser
 import sys
 
 from globals import PROGRAM
-
-DESCRIPTION = "Simple framework for a CLI script."
-EPILOG = "See http://fuzzyklein.github.io for more info."
 
 STD_OPTS = [[[],
   {"dest": "args",
@@ -29,9 +28,19 @@ STD_OPTS = [[[],
     ]
 
 class Arguments(dict):
+    """ Parse the command line arguments and store the relevant values. """
+
+    DESCRIPTION = "Simple framework for a CLI script."
+    EPILOG = "See http://fuzzyklein.github.io for more info."
+
     def __init__(self, *args, **kwargs):
+        """ Use an `ArgumentParser` object to parse the command line.
+
+            :args: and :kwargs: are passed to the `dict.__init__` function.
+        """
+
         super().__init__(*args, **kwargs)
-        parser = ArgumentParser(prog=PROGRAM, description=DESCRIPTION, epilog=EPILOG)
+        parser = ArgumentParser(prog=PROGRAM, description=self.DESCRIPTION, epilog=self.EPILOG)
         for option in STD_OPTS:
             parser.add_argument(*option[0], **option[1])
         self.update(vars(parser.parse_args(sys.argv[1:])))

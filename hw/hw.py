@@ -5,4 +5,5 @@ class HelloWorld(Program):
         super().process_file(p)
 
     def run(self):
+        super().run()
         print('Hello world')
