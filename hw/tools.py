@@ -34,4 +34,3 @@ class Logging():
 
     def __init__(self, *args, **kwargs):
         self.log = logging.getLogger(str(type(self)))
-        self.log.addHandler()

@@ -1,6 +1,8 @@
 """ Define the `Arguments` class. """
 
 from argparse import ArgumentParser
+import inspect
+import logging
 import sys
 
 from globals import PROGRAM
@@ -31,8 +33,11 @@ STD_OPTS = [[[],
 class Arguments(dict):
     """ Parse the command line arguments and store the relevant values. """
 
-    DESCRIPTION = "Simple framework for a CLI script."
-    EPILOG = "See http://fuzzyklein.github.io for more info."
+    import __init__
+
+    INIT_DOCSTR = [line for line in inspect.getdoc(__init__).split('\n') if line]
+    DESCRIPTION = INIT_DOCSTR[1]
+    EPILOG = INIT_DOCSTR[-1]
 
     def __init__(self, *args, **kwargs):
         """ Use an `ArgumentParser` object to parse the command line.
@@ -41,7 +46,10 @@ class Arguments(dict):
         """
 
         super().__init__(*args, **kwargs)
+
         parser = ArgumentParser(prog=PROGRAM, description=self.DESCRIPTION, epilog=self.EPILOG)
+
         for option in STD_OPTS:
             parser.add_argument(*option[0], **option[1])
+
         self.update(vars(parser.parse_args(sys.argv[1:])))
