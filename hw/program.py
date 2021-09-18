@@ -46,7 +46,7 @@ class Program():
 
     def startlog(self):
         """ Set up logging. """
-
+        self.logger = logging.getLogger('root')
         if self.settings['log'] or 'logfile' in self.settings.keys():
             p = Path(self.settings['log'] if self.settings['log'] else self.settings['logfile'])
             # print(f'{__debug__=}')
@@ -65,12 +65,28 @@ class Program():
             level = logging.DEBUG
         elif self.settings['verbose']:
             level = logging.INFO
-        else:
+        elif self.settings['warnings']:
             level = logging.WARNING
+        else:
+            level = logging.ERROR
 
-        logging.basicConfig(filename=str(p) if p else None, level=level, filemode='w')
+        self.logger.setLevel(level)
+
+        if self.settings['logfile']:
+            fh = logging.FileHandler(self.settings['logfile'], mode='w')
+            fh.setLevel(level)
+
+        ch = logging.StreamHandler()
+        ch.setLevel(level)
+
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        fh.setFormatter(formatter)
+        ch.setFormatter(formatter)
+        self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
+
         logging.captureWarnings(True)
-        return logging.getLogger(__name__)
+        return logging.getLogger(str(type(self)))
 
     def run(self):
         """ Process any command line arguments as file names. """

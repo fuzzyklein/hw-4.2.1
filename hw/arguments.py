@@ -24,7 +24,8 @@ STD_OPTS = [[[],
       [["-i", "--input"], {"dest": "input", "help": "Specify a file to be used as input."}],
       [["-o", "--output"], {"dest": "output", "help": "Specify a file to be used as output."}],
       [["-q", "--quiet"], {"action": "store_true", "dest": "quiet", "help": "Suppress screen output."}],
-      [["-l", "--log"], {"dest": "log", "help": "Log error messages. Optionally specify a log file."}]
+      [["-l", "--log"], {"dest": "log", "help": "Specify a log file."}],
+      [["-w", "--warnings"], {"dest": "warnings", "help": "Display warning messages."}]
     ]
 
 class Arguments(dict):
