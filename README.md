@@ -5,7 +5,7 @@ Simplified and lighter weight version of a command line application framework fo
 
 To create a new command line application, follow these steps:
 
-  * In a Web bro<PROJECT_NAME>er:
+  * In a Web broWSer:
 
     - Go to https://github.com/fuzzyklein/hw-4.2.1
     - Click on "Use this template".
@@ -27,6 +27,10 @@ To create a new command line application, follow these steps:
     - `mv etc/hw.conf etc/<PROJECT_NAME>.conf`
     - `sed --in-place=~ s/HelloWorld/<CLASS_NAME>/ <PROJECT_NAME>/<PROJECT_NAME>.py`
     - `sed --in-place=~ s/HelloWorld/<CLASS_NAME>/ <PROJECT_NAME>/__main__.py`
+    - `mv sh/hw.sh sh/<PROJECT_NAME>.sh`
+    - `rm run`
+    - `ln -s sh/<PROJECT_NAME>.sh run`
+    - `rm */*~`
     - `./run -d`
 
   * `<PROJECT_NAME>` above is the name of your project and `<CLASS_NAME>` is the
@@ -61,11 +65,9 @@ To create a new command line application, follow these steps:
 
 That seems to have worked pretty well so far, anyway, but this project is still in Beta.
 
-The following steps are optional but recommended:
+If all goes well, then:
 
-  * `mv sh/hw.sh sh/<PROJECT_NAME>.sh`
-  * `rm run`
-  * `ln -s sh/<PROJECT_NAME>.sh run`
+  * `git commit -a -m 'Change the names to protect the innocent.`
 
 I doubt if that link works on Windoze anyway. In fact the `sh/hw.sh` script
 probably only works under `PowerShell`, `WSL`, or some other `Linux` emulator
