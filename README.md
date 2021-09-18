@@ -67,7 +67,7 @@ That seems to have worked pretty well so far, anyway, but this project is still 
 
 If all goes well, then:
 
-  * `git commit -a -m 'Change the names to protect the innocent.`
+  * `git commit -a -m 'Update program name occurences.'; git push`
 
 I doubt if that link works on Windoze anyway. In fact the `sh/hw.sh` script
 probably only works under `PowerShell`, `WSL`, or some other `Linux` emulator
