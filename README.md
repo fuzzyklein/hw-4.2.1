@@ -57,7 +57,7 @@ To create a new command line application, follow these steps:
      'verbose': False,
      'warnings': None}
 
-    Log file: ws.log
+    Log file: <PROGRAM_NAME>.log
 
     2021-09-18 16:47:56,772 - <class '<PROGRAM_NAME>.<CLASS_NAME>> - DEBUG - Debugging <class <PROGRAM_NAME>.<CLASS_NAME>>
     Hello world
