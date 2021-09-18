@@ -1,3 +1,15 @@
+.vs
+# nb
+bin
+data/info4pybooks.json
+run
+tests/
+out/
+
+log
+www
+
+.venv/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
