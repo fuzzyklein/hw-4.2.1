@@ -29,6 +29,7 @@ class Program():
         args = Arguments()
         conf = Configure(args['config'])
         env = Environment()
+
         try:
             self.settings = conf | env | args
         except TypeError:
@@ -71,18 +72,17 @@ class Program():
             level = logging.ERROR
 
         self.logger.setLevel(level)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
         if self.settings['logfile']:
             fh = logging.FileHandler(self.settings['logfile'], mode='w')
             fh.setLevel(level)
+            fh.setFormatter(formatter)
+            self.logger.addHandler(fh)
 
         ch = logging.StreamHandler()
         ch.setLevel(level)
-
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        fh.setFormatter(formatter)
         ch.setFormatter(formatter)
-        self.logger.addHandler(fh)
         self.logger.addHandler(ch)
 
         logging.captureWarnings(True)
