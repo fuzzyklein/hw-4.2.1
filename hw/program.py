@@ -49,10 +49,10 @@ class Program():
         """ Set up logging. """
         self.logger = logging.getLogger('root')
         if self.settings['log'] or 'logfile' in self.settings.keys():
-            p = Path(self.settings['log'] if self.settings['log'] else self.settings['logfile'])
+            p = BASEDIR / (self.settings['log'] if self.settings['log'] else self.settings['logfile'])
             # print(f'{__debug__=}')
             if __debug__:
-                printc(f'<cyan>Log file<reset>: {p.name}')
+                printc(f'<cyan>Log file<reset>: {str(p)}')
                 print()
 
             if not p.exists():
