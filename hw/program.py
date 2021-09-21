@@ -74,8 +74,8 @@ class Program():
         self.logger.setLevel(level)
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-        if self.settings['logfile']:
-            fh = logging.FileHandler(self.settings['logfile'], mode='w')
+        if p:
+            fh = logging.FileHandler(p.name, mode='w')
             fh.setLevel(level)
             fh.setFormatter(formatter)
             self.logger.addHandler(fh)

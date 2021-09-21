@@ -20,7 +20,7 @@ To create a new command line application, follow these steps:
 
   * In a terminal:
 
-    - `cd <PROJECT_NAME>-4.2.1/`
+    - `cd <PROJECT_NAME>-<VERSION>/`
     - `sed -r --in-place=~ s/hw/<PROJECT_NAME>/ ./*/*`
     - `mv hw <PROJECT_NAME>`
     - `mv <PROJECT_NAME>/hw.py <PROJECT_NAME>/<PROJECT_NAME>.py`
