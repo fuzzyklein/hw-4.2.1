@@ -1,5 +1,10 @@
 #! /usr/bin/env bash
 
+printf -v CALLER "$_"
+. path
+printf -v BASEDIR "`basedir $CALLER`"
+printf "$BASEDIR\n"
+
 virtual=0
 venv=.venv
 installed_just_now=1
