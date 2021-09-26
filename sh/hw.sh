@@ -9,7 +9,7 @@ printf -v VERSION "1.0"
 
 export debug=0
 export verbose=0
-export logfile=
+# export logfile=
 
 optstring=e:dv
 
@@ -44,6 +44,9 @@ printf "Target: $TARGET\n"
 printf -v BASEDIR "${TARGET%/*/*}" # "`hello/basedir.py`"
 printf -v BASEDIR "`realpath $BASEDIR`"
 printf "Base directory: $BASEDIR\n"
+printf -v BASENAME "`basename $BASEDIR`"
+printf -v PROJECT "${BASENAME%%-*}\n"
+printf -v VERSION "${BASENAME##*-}\n"
 
 virtual=0
 venv=.venv
@@ -70,9 +73,9 @@ fi
 
 
 if [[ " $@ " =~ " -d " ]]; then
-  python $BASEDIR/hw $@
+  python $BASEDIR/$PROJECT $@
 else
-  python -O $BASEDIR/hw $@
+  python -O $BASEDIR/$PROJECT $@
 fi
 
 [[ $virtual ]] && deactivate

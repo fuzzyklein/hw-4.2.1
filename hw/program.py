@@ -47,6 +47,9 @@ class Program():
 
     def startlog(self):
         """ Set up logging. """
+        if __debug__:
+            printc('<green>Running<reset> `startlog` ...')
+            print(f'{self.settings["logfile"]=}')
         self.logger = logging.getLogger('root')
         if self.settings['log'] or 'logfile' in self.settings.keys():
             p = BASEDIR / (self.settings['log'] if self.settings['log'] else self.settings['logfile'])
@@ -75,7 +78,7 @@ class Program():
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
         if p:
-            fh = logging.FileHandler(p.name, mode='w')
+            fh = logging.FileHandler(p.resolve(), mode='w')
             fh.setLevel(level)
             fh.setFormatter(formatter)
             self.logger.addHandler(fh)

@@ -4,7 +4,10 @@ from configparser import ConfigParser
 import logging
 from os import environ, sep
 from pathlib import Path
+from pprint import pprint as pp
 from warnings import warn
+
+from ansicolortags import printc
 
 from globals import BASEDIR
 from tools import Logging
@@ -13,6 +16,7 @@ class Configure(dict):
     """ Same thing as a `ConfigParser`, but simpler. """
 
     CONFIG_FILE = BASEDIR / ('etc' + sep + 'hw.conf')
+    if __debug__: print(f'{CONFIG_FILE=}')
 
     DEFAULT = """[DEFAULT]
 # Uncomment this line to send `logging` messages to a file.
@@ -27,14 +31,21 @@ class Configure(dict):
         """
 
         # print(f'{args=}\n{bool(args)=}\n{kwargs=}')
-        super().__init__(self)
+        super().__init__()
         # print("Reading configuration file...")
         try:
             if not file: file = self.CONFIG_FILE
+            if __debug__: print(f'{file=}')
             # self.log = logging.getLogger(__name__)
             parser = ConfigParser()
             parser.read_string('[DEFAULT]\n' + Path(file).read_text())
-            self |= parser['DEFAULT']
+            if __debug__:
+                printc(f"<red>Log file<reset>? {parser['DEFAULT']['logfile']}")
+            # self.update(parser['DEFAULT'])
+            if __debug__: pp(issubclass(list, type(parser['DEFAULT'].keys())))
+            for k in parser['DEFAULT'].keys():
+                self[k] = parser['DEFAULT'][k]
+            if __debug__: pp(self)
         except FileNotFoundError:
             parser.read_string(self.DEFAULT)
         except TypeError:
