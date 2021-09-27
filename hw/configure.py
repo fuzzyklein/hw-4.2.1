@@ -9,18 +9,19 @@ from warnings import warn
 
 from ansicolortags import printc
 
-from globals import BASEDIR
-from tools import Logging
+from globals import *
+from tools import *
 
 class Configure(dict):
     """ Same thing as a `ConfigParser`, but simpler. """
 
-    CONFIG_FILE = BASEDIR / ('etc' + sep + 'hw.conf')
+    CONFIG_FILE = BASEDIR / ('etc' + sep + f'{PROGRAM}.conf')
     if __debug__: print(f'{CONFIG_FILE=}')
 
     DEFAULT = """[DEFAULT]
 # Uncomment this line to send `logging` messages to a file.
-# logfile = log/hw.log
+logfile = log/ws.log
+template = /home/fuzzy/Development/hw-4.2.1
 """
 
     def __init__(self, file=None):
@@ -34,18 +35,20 @@ class Configure(dict):
         super().__init__()
         # print("Reading configuration file...")
         try:
-            if not file: file = self.CONFIG_FILE
-            if __debug__: print(f'{file=}')
-            # self.log = logging.getLogger(__name__)
-            parser = ConfigParser()
-            parser.read_string('[DEFAULT]\n' + Path(file).read_text())
             if __debug__:
-                printc(f"<red>Log file<reset>? {parser['DEFAULT']['logfile']}")
-            # self.update(parser['DEFAULT'])
-            if __debug__: pp(issubclass(list, type(parser['DEFAULT'].keys())))
-            for k in parser['DEFAULT'].keys():
-                self[k] = parser['DEFAULT'][k]
-            if __debug__: pp(self)
+                print()
+                print("DEBUGGING CONFIGURATION CLASS INITIALIZER...")
+                print()
+                printc(f"<cyan>Configuration file<reset>: {self.CONFIG_FILE}")
+                print()
+                i = 0
+            for line in [s for s in Path(self.CONFIG_FILE).read_text().split('\n')
+                         if s and not s.startswith('#')]:
+                if __debug__:
+                    printc(f"<cyan>Line {i}<reset>: {line}")
+                    i += 1
+                item = line.split('=')
+                self.update({item[0].strip() : item[1].strip()})
         except FileNotFoundError:
             parser.read_string(self.DEFAULT)
         except TypeError:

@@ -3,7 +3,7 @@
 printf -v CALLER "$_"
 
 printf -v PROGRAM "${0##*/}"
-printf -v DESCRIPTION "Set up the environment for hw and run the program."
+printf -v DESCRIPTION "Set up the environment for $PROGRAM and run the program."
 printf -v AUTHOR "Russell Klein"
 printf -v VERSION "1.0"
 
