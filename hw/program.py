@@ -8,13 +8,13 @@ from pathlib import Path
 from pprint import pprint as pp
 import sys
 
-from ansicolortags import printc
+# from ansicolortags import printc
 
-from arguments import Arguments
-from configure import Configure
-from environment import Environment
-from globals import *
-from tools import invisible, str2path_method
+from hw.arguments import Arguments
+from hw.configure import Configure
+from hw.environment import Environment
+from hw.globals import *
+from hw.tools import invisible, str2path_method
 
 class Program():
     """ Abstract class that processes command line arguments as files. """
@@ -33,12 +33,12 @@ class Program():
         try:
             self.settings = conf | env | args
         except TypeError:
-            printc("<yellow>WARNING<reset>: Python 3.8 support is deprecated.")
+            print("WARNING: Python 3.8 support is deprecated.")
             from collections import ChainMap
             self.settings = dict(ChainMap(args, env, conf))
 
         if __debug__:
-            printc('<yellow>Program settings<reset>:')
+            print('Program settings:')
             pp(self.settings)
             print()
 
@@ -48,14 +48,14 @@ class Program():
     def startlog(self):
         """ Set up logging. """
         if __debug__:
-            printc('<green>Running<reset> `startlog` ...')
+            print('Running `startlog` ...')
             print(f'{self.settings["logfile"]=}')
         self.logger = logging.getLogger('root')
         if self.settings['log'] or 'logfile' in self.settings.keys():
             p = BASEDIR / (self.settings['log'] if self.settings['log'] else self.settings['logfile'])
             # print(f'{__debug__=}')
             if __debug__:
-                printc(f'<cyan>Log file<reset>: {str(p)}')
+                print(f'Log file: {str(p)}')
                 print()
 
             if not p.exists():

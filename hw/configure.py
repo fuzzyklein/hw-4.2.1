@@ -7,10 +7,10 @@ from pathlib import Path
 from pprint import pprint as pp
 from warnings import warn
 
-from ansicolortags import printc
+# from ansicolortags import printc
 
-from globals import *
-from tools import *
+from hw.globals import *
+from hw.tools import *
 
 class Configure(dict):
     """ Same thing as a `ConfigParser`, but simpler. """
@@ -39,13 +39,13 @@ template = /home/fuzzy/Development/hw-4.2.1
                 print()
                 print("DEBUGGING CONFIGURATION CLASS INITIALIZER...")
                 print()
-                printc(f"<cyan>Configuration file<reset>: {self.CONFIG_FILE}")
+                print(f"Configuration file: {self.CONFIG_FILE}")
                 print()
                 i = 0
             for line in [s for s in Path(self.CONFIG_FILE).read_text().split('\n')
                          if s and not s.startswith('#')]:
                 if __debug__:
-                    printc(f"<cyan>Line {i}<reset>: {line}")
+                    print(f"Line {i}: {line}")
                     i += 1
                 item = line.split('=')
                 self.update({item[0].strip() : item[1].strip()})

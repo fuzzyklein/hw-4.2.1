@@ -1,4 +1,4 @@
-from program import Program
+from hw.program import Program
 
 class HelloWorld(Program):
     def process_file(self, p):
